@@ -77,16 +77,28 @@ async function startPrompt() {
    
 
 // function View Employees 
-
+async function viewEmployee() {
+    console.log("VE Working");
+}
 // function View Employees by Department 
-
+async function viewEmployeesByDept() {
+    console.log("VEBD Working");
+}
 // function Add Employee 
-
+async function addEmployee() {
+    console.log("Add Employee");
+}
 // function Remove Employees 
-
+async function removeEmployee() {
+    console.log("Remove Employee");
+}
 // function Update Employees Role 
-
+async function updateEmpRole() {
+    console.log("Update Employee Role");
+}
 // function Add Role 
-
+async function addRole() {
+    console.log("Add Role");
+}
 // function Quit 
 
