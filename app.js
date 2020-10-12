@@ -23,10 +23,10 @@ connection.connect(function (err) {
 
 //initial prompt to ask questions of what user would like to do
 
-async function startPrompt() {
+function startPrompt() {
       console.log("working");
-      try {
-        const choice = await inquirer.prompt([
+      inquirer.
+      prompt(
           {
             type: "list",
             name: "ownerChoice",
@@ -40,8 +40,7 @@ async function startPrompt() {
               "Add Role", 
               "Quit"
             ]
-          }
-        ])
+          })
     
         //conditional switch statement for options
     
@@ -70,34 +69,35 @@ async function startPrompt() {
               break;
           }
         });
-      } catch (err) {
-        console.log(err);
-    }
     }
    
 
 // function View Employees 
-async function viewEmployee() {
+function viewEmployee() {
     console.log("VE Working");
+    
+        var query = hjkl
+    
 }
+
 // function View Employees by Department 
-async function viewEmployeesByDept() {
+function viewEmployeesByDept() {
     console.log("VEBD Working");
 }
 // function Add Employee 
-async function addEmployee() {
+function addEmployee() {
     console.log("Add Employee");
 }
 // function Remove Employees 
-async function removeEmployee() {
+function removeEmployee() {
     console.log("Remove Employee");
 }
 // function Update Employees Role 
-async function updateEmpRole() {
+function updateEmpRole() {
     console.log("Update Employee Role");
 }
 // function Add Role 
-async function addRole() {
+function addRole() {
     console.log("Add Role");
 }
 // function Quit 
