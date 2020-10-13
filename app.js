@@ -75,28 +75,50 @@ function viewEmployee() {
 
   // https://dev.mysql.com/doc/refman/8.0/en/outer-join-simplification.html
 
-  var query =   `SELECT employee.id, 
-                employee.first_name, 
-                employee.last_name, 
-                role.title, 
-                department.name, 
-                role.salary, 
-                CONCAT (manager.first_name, '', manager.last_name)`
+  const query =   `SELECT e.id, 
+                e.first_name, 
+                e.last_name, 
+                r.title, 
+                d.name, 
+                r.salary, 
+                CONCAT (m.first_name, ' ', m.last_name) AS manager
+                FROM employee e
+                LEFT JOIN role r 
+                      ON e.role_id = r.id
+                LEFT JOIN department d 
+                      ON d.id = r.department_id
+                LEFT JOIN employee m 
+                      ON m.id = e.manager_id`
 
   connection.query(query, function (err, res) {
       if (err) throw err; 
-  })
+    
+      //display 
+      console.table(res); 
+
+      startPrompt();
+  });
 }
 
 // function View Employees by Department
-function viewEmployeesByDept() {
+function viewEmployeesByDeptPrompt() {
   console.log("VEBD Working");
+
+  inquirer
+    .prompt ([
+        {
+          type: "list", 
+          name: "deptId", 
+          message: "Which department would you like to view?",
+          choices: "choices"
+        }
+    ])
 }
 // function Add Employee
 function addEmployee() {
   console.log("Add Employee");
 
-  var query = `SELECT r.id, r.title, r.salary FROM role as r`
+  const query = `SELECT r.id, r.title, r.salary FROM role as r`
 
   connection.query(query, function (err, res) {
       if (err) throw err; 
