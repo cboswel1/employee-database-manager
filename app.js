@@ -75,7 +75,17 @@ function viewEmployee() {
 
   // https://dev.mysql.com/doc/refman/8.0/en/outer-join-simplification.html
 
-  var query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, CONCAT(manager.first_name, ' ', manager.last_name)`;
+  var query =   `SELECT employee.id, 
+                employee.first_name, 
+                employee.last_name, 
+                role.title, 
+                department.name, 
+                role.salary, 
+                CONCAT (manager.first_name, '', manager.last_name)`
+
+  connection.query(query, function (err, res) {
+      if (err) throw err; 
+  })
 }
 
 // function View Employees by Department
@@ -85,6 +95,14 @@ function viewEmployeesByDept() {
 // function Add Employee
 function addEmployee() {
   console.log("Add Employee");
+
+  var query = `SELECT r.id, r.title, r.salary FROM role as r`
+
+  connection.query(query, function (err, res) {
+      if (err) throw err; 
+
+      //.map create new array of objects
+  });
 }
 // function Remove Employees
 function removeEmployee() {
