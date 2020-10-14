@@ -101,31 +101,64 @@ function viewEmployee() {
 }
 
 // function View Employees by Department
-function viewEmployeesByDeptPrompt() {
+function viewEmployeesByDept() {
   console.log("VEBD Working");
 
-  inquirer
-    .prompt ([
-        {
-          type: "list", 
-          name: "deptId", 
-          message: "Which department would you like to view?",
-          choices: "choices"
-        }
-    ])
-}
+  connection.query("SELECT * from department", function(err, res) {
+    if(err) throw err;
+
+    console.table(res);
+
+    startPrompt();
+    });
+};
+
 // function Add Employee
 function addEmployee() {
   console.log("Add Employee");
 
-  const query = `SELECT r.id, r.title, r.salary FROM role as r`
+  //questions to add employee information
+  var addEmp = [
+      {
+          type: "input", 
+          message: "Employee's first name?",
+          name: "first_name"
+      }, 
+      {
+          type: "input", 
+          message: "Employee's last name?", 
+          name: "last_name"
+      }, 
+      {
+          type: "input", 
+          message: "Employee's position?", 
+          name: "roleID"
+      }, 
+      {
+          type: "input", 
+          message: "Who manages this employee?", 
+          name: "managerID"
+      }
+  ];
 
-  connection.query(query, function (err, res) {
-      if (err) throw err; 
+  inquirer.prompt(addEmp).then(function(answer) {
+      connection.query("INSERT INTO employee SET ?"), 
+      {
+          first_name: answer.first_name,
+          last_name: answer.last_name, 
+          role_id: answer.roleID, 
+          manager_id: answer.managerID,
+      }, 
+      function(err) {
+          if (err) throw err; 
 
-      //.map create new array of objects
-  });
-}
+          viewEmployee();
+      }
+  
+    });
+  }
+
+  
 // function Remove Employees
 function removeEmployee() {
   console.log("Remove Employee");
