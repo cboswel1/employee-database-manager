@@ -23,7 +23,7 @@ connection.connect(function (err) {
 //initial prompt to ask questions of what user would like to do
 
 function startPrompt() {
-  console.log("working");
+  // console.log("working");
   inquirer
     .prompt({
       type: "list",
@@ -74,7 +74,7 @@ function startPrompt() {
 
 // function View Employees
 function viewEmployee() {
-  console.log("VE Working");
+  // console.log("VE Working");
 
   // https://dev.mysql.com/doc/refman/8.0/en/outer-join-simplification.html
 
@@ -103,10 +103,11 @@ function viewEmployee() {
   });
 }
 
+
 // function to View  Departments
 function viewDept() {
-  console.log("VEBD Working");
-
+  // console.log("VEBD Working");
+  //selecting from dept. 
   connection.query("SELECT * from department", function (err, res) {
     if (err) throw err;
 
@@ -116,22 +117,24 @@ function viewDept() {
   });
 }
 
+
 //function to View Roles
 function viewRoles() {
-    console.log("View Roles Working");
-  
-    connection.query("SELECT * from role", function (err, res) {
-      if (err) throw err;
-  
-      console.table(res);
-  
-      startPrompt();
-    });
-  }
+  // console.log("View Roles Working");
+  //selecting for roles
+  connection.query("SELECT * from role", function (err, res) {
+    if (err) throw err;
+
+    console.table(res);
+
+    startPrompt();
+  });
+}
+
 
 // function Add Employee
 function addEmployee() {
-  console.log("Add Employee");
+  // console.log("Add Employee");
 
   //questions to add employee information
   const addEmp = [
@@ -156,7 +159,7 @@ function addEmployee() {
       name: "managerID",
     },
   ];
-
+  //insert response into employee
   inquirer.prompt(addEmp).then(function (answer) {
     const query = `INSERT INTO employee SET ?`;
 
@@ -177,14 +180,44 @@ function addEmployee() {
   });
 }
 
+
 // function Update Employees Role
 function updateEmpRole() {
-  console.log("Update Employee Role");
+  // console.log("Update Employee Role");
+
+  //prompts for updated employee role
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "empName",
+        message: "Update which employee's information?",
+      },
+      {
+        type: "input",
+        name: "newRole",
+        message: "Enter new role id (1 - 7):",
+      },
+    ])
+    //updating our db with user input
+    .then(function (answer) {
+      connection.query(
+        "UPDATE employee SET role_id = ? WHERE first_name = ?",
+        [answer.newRole, answer.empName],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+
+          startPrompt();
+        }
+      );
+    });
 }
+
 
 // function Add Role
 function addRole() {
-  console.log("Add Role");
+  // console.log("Add Role");
 
   //prompts
   inquirer
@@ -202,7 +235,7 @@ function addRole() {
       {
         type: "input",
         name: "department_id",
-        message: "Enter department ID:",
+        message: "Enter department ID (1, 2, 3, 4):",
       },
     ])
     .then(function (answer) {
