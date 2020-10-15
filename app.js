@@ -31,7 +31,8 @@ function startPrompt() {
       message: "What would you like to do?",
       choices: [
         "View Employees",
-        "View Employees by Department",
+        "View Departments",
+        "View Roles",
         "Add Employee",
         "Update Employee Role",
         "Add Role",
@@ -46,8 +47,11 @@ function startPrompt() {
         case "View Employees":
           viewEmployee();
           break;
-        case "View Employees by Department":
-          viewEmployeesByDept();
+        case "View Departments":
+          viewDept();
+          break;
+        case "View Roles":
+          viewRoles();
           break;
         case "Add Employee":
           addEmployee();
@@ -74,7 +78,7 @@ function viewEmployee() {
 
   // https://dev.mysql.com/doc/refman/8.0/en/outer-join-simplification.html
 
-  const query =   `SELECT e.id, 
+  const query = `SELECT e.id, 
                 e.first_name, 
                 e.last_name, 
                 r.title, 
@@ -87,30 +91,43 @@ function viewEmployee() {
                 LEFT JOIN department d 
                       ON d.id = r.department_id
                 LEFT JOIN employee m 
-                      ON m.id = e.manager_id`
+                      ON m.id = e.manager_id`;
 
   connection.query(query, function (err, res) {
-      if (err) throw err; 
-    
-      //display 
-      console.table(res); 
+    if (err) throw err;
 
-      startPrompt();
+    //display
+    console.table(res);
+
+    startPrompt();
   });
 }
 
-// function View Employees by Department
-function viewEmployeesByDept() {
+// function to View  Departments
+function viewDept() {
   console.log("VEBD Working");
 
-  connection.query("SELECT * from department", function(err, res) {
-    if(err) throw err;
+  connection.query("SELECT * from department", function (err, res) {
+    if (err) throw err;
 
     console.table(res);
 
     startPrompt();
+  });
+}
+
+//function to View Roles
+function viewRoles() {
+    console.log("View Roles Working");
+  
+    connection.query("SELECT * from role", function (err, res) {
+      if (err) throw err;
+  
+      console.table(res);
+  
+      startPrompt();
     });
-};
+  }
 
 // function Add Employee
 function addEmployee() {
@@ -118,82 +135,84 @@ function addEmployee() {
 
   //questions to add employee information
   const addEmp = [
-      {
-          type: "input", 
-          message: "Employee's first name?",
-          name: "first_name"
-      }, 
-      {
-          type: "input", 
-          message: "Employee's last name?", 
-          name: "last_name"
-      }, 
-      {
-          type: "input", 
-          message: "Employee's position?", 
-          name: "roleID"
-      }, 
-      {
-          type: "input", 
-          message: "Who manages this employee?", 
-          name: "managerID"
-      }
+    {
+      type: "input",
+      message: "Employee's first name?",
+      name: "first_name",
+    },
+    {
+      type: "input",
+      message: "Employee's last name?",
+      name: "last_name",
+    },
+    {
+      type: "input",
+      message: "Employee's position?",
+      name: "roleID",
+    },
+    {
+      type: "input",
+      message: "Who manages this employee?",
+      name: "managerID",
+    },
   ];
 
-  inquirer.prompt(addEmp).then(function(answer) {
-      const query =`INSERT INTO employee SET ?`
-      
-      connection.query(query,
+  inquirer.prompt(addEmp).then(function (answer) {
+    const query = `INSERT INTO employee SET ?`;
+
+    connection.query(
+      query,
       {
-          first_name: answer.first_name,
-          last_name: answer.last_name, 
-          role_id: answer.roleID, 
-          manager_id: answer.managerID,
-      }, 
-      function(err) {
-          if (err) throw err; 
+        first_name: answer.first_name,
+        last_name: answer.last_name,
+        role_id: answer.roleID,
+        manager_id: answer.managerID,
+      },
+      function (err) {
+        if (err) throw err;
 
-          viewEmployee();
-
-      });
-  
-    });
-  }
-
-  
-
+        viewEmployee();
+      }
+    );
+  });
+}
 
 // function Update Employees Role
 function updateEmpRole() {
   console.log("Update Employee Role");
-  }
+}
 
 // function Add Role
 function addRole() {
   console.log("Add Role");
 
-  inquirer.prompt([
-  {
-      type: "input", 
-      name: "title", 
-      message: "Enter new title"
-  }, 
-  {
-      type: "number", 
-      name: "salary", 
-      message: "Enter new salary"
-  }, 
-  {
-      type: "input", 
-      name: "department_id", 
-      mesage: "Enter department ID:"
-  }
-]) 
-.then(function (answer) {
-    connection.query("INSERT INTO role (title, salary, department_id) values (?, ?, ?)", [answer.title, answer.salary, answer.department_id], function (err, data) {
-        console.table(data);
-    })
-    startPrompt();
-})
+  //prompts
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "Enter new title",
+      },
+      {
+        type: "number",
+        name: "salary",
+        message: "Enter new salary",
+      },
+      {
+        type: "input",
+        name: "department_id",
+        message: "Enter department ID:",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "INSERT INTO role (title, salary, department_id) values (?, ?, ?)",
+        [answer.title, answer.salary, answer.department_id],
+        function (err, data) {
+          console.table(data);
+        }
+      );
+      viewRoles();
+    });
 }
-// function Quit
