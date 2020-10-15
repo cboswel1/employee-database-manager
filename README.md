@@ -24,7 +24,7 @@ This repository can be cloned from Github.com/cboswel1/employee-db. You must hav
   - [NPM](https://www.npmjs.com/)
 
 ## Preview 
-<img src="" height="256" title="Home Screen">
+<img src="https://raw.githubusercontent.com/cboswel1/employee-db/main/Assets/emdb.png" height="256" title="Home Screen">
 
 
 ## Live Preview 
