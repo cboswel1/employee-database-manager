@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/npm?color=blue&logo=npm)](https://www.npmjs.com/package/inquirer)
 
 
-The Employee Database Manager is a CLI application that allows a user to update and manager a database of their employees. 
+The Employee Database Manager is a CLI application that allows a user to update and manager a database of their employees. This program relies heavily on the use of npm packages, especially inquirer, table, and mysql. 
 
 
 ## Table of Contents 
