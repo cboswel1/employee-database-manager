@@ -1,6 +1,8 @@
 # employee-database-manager 
 
 ![](https://img.shields.io/badge/license-MIT-yellow)
+[![node.js](https://img.shields.io/node/v/c?color=pink)](https://nodejs.org/en/)
+[![npm](https://img.shields.io/npm/v/npm?color=blue&logo=npm)](https://www.npmjs.com/package/inquirer)
 
 
 The Employee Database Manager is a CLI application that allows a user to update and manager a database of their employees. 
