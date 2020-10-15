@@ -28,7 +28,7 @@ This repository can be cloned from Github.com/cboswel1/employee-db. You must hav
 
 
 ## Live Preview 
-[Preview]( )
+[Preview](https://www.youtube.com/watch?v=P3ZBJI-OlN4)
 
 
 ## License

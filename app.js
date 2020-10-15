@@ -170,12 +170,12 @@ function addEmployee() {
     },
     {
       type: "input",
-      message: "Employee's position?",
+      message: "Employee's position by ID (1 - 7)",
       name: "roleID",
     },
     {
       type: "input",
-      message: "Who manages this employee?",
+      message: "Enter Manager ID for this employee",
       name: "managerID",
     },
   ];
