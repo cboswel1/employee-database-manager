@@ -21,7 +21,6 @@ This repository can be cloned from Github.com/cboswel1/employee-db. You must hav
 ## Usage
   - [Node.js](https://nodejs.org/en/)
   - [MySQL](https://www.mysql.com/)
-  - [Heroku](https://heroku.com/)
   - [NPM](https://www.npmjs.com/)
 
 ## Preview 
