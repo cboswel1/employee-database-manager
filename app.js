@@ -33,7 +33,6 @@ function startPrompt() {
         "View Employees",
         "View Employees by Department",
         "Add Employee",
-        "Remove Employees",
         "Update Employee Role",
         "Add Role",
         "Quit",
@@ -118,7 +117,7 @@ function addEmployee() {
   console.log("Add Employee");
 
   //questions to add employee information
-  var addEmp = [
+  const addEmp = [
       {
           type: "input", 
           message: "Employee's first name?",
@@ -142,7 +141,9 @@ function addEmployee() {
   ];
 
   inquirer.prompt(addEmp).then(function(answer) {
-      connection.query("INSERT INTO employee SET ?"), 
+      const query =`INSERT INTO employee SET ?`
+      
+      connection.query(query,
       {
           first_name: answer.first_name,
           last_name: answer.last_name, 
@@ -153,22 +154,46 @@ function addEmployee() {
           if (err) throw err; 
 
           viewEmployee();
-      }
+
+      });
   
     });
   }
 
   
-// function Remove Employees
-function removeEmployee() {
-  console.log("Remove Employee");
-}
+
+
 // function Update Employees Role
 function updateEmpRole() {
   console.log("Update Employee Role");
-}
+  }
+
 // function Add Role
 function addRole() {
   console.log("Add Role");
+
+  inquirer.prompt([
+  {
+      type: "input", 
+      name: "title", 
+      message: "Enter new title"
+  }, 
+  {
+      type: "number", 
+      name: "salary", 
+      message: "Enter new salary"
+  }, 
+  {
+      type: "input", 
+      name: "department_id", 
+      mesage: "Enter department ID:"
+  }
+]) 
+.then(function (answer) {
+    connection.query("INSERT INTO role (title, salary, department_id) values (?, ?, ?)", [answer.title, answer.salary, answer.department_id], function (err, data) {
+        console.table(data);
+    })
+    startPrompt();
+})
 }
 // function Quit
