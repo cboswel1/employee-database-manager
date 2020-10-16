@@ -99,22 +99,9 @@ function viewEmployee() {
 
   // https://dev.mysql.com/doc/refman/8.0/en/outer-join-simplification.html
 
-  const query = `SELECT e.id, 
-                e.first_name, 
-                e.last_name, 
-                r.title, 
-                d.name, 
-                r.salary, 
-                CONCAT (m.first_name, ' ', m.last_name) AS manager
-                FROM employee e
-                LEFT JOIN role r 
-                      ON e.role_id = r.id
-                LEFT JOIN department d 
-                      ON d.id = r.department_id
-                LEFT JOIN employee m 
-                      ON m.id = e.manager_id`;
+  
 
-  connection.query(query, function (err, res) {
+  connection.query("SELECT e.id, e.first_name, e.last_name, r.title, d.name, r.salary, CONCAT (m.first_name, ' ', m.last_name) AS manager FROM employee e LEFT JOIN role r ON e.role_id = r.id LEFT JOIN department d ON d.id = r.department_id LEFT JOIN employee m ON m.id = e.manager_id", function (err, res) {
     if (err) throw err;
 
     //display
